@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.ico">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jjl.gold","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"flat"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="A. Three Strings题意：给出三个长度相等的字符串a,b,c，对于每一位a或b中的一个和c交换，是否存在使得a，b相等的情况。思路：直接枚举c的每一位是否和a或b相同，相同则和不相同的那个交换，没有相同的则无解12345678910111213141516171819202122#include&lt;bits&#x2F;stdc++.h&gt;using namespace std;strin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codeforces Round #619 (Div. 2) 题解">
+<meta property="og:url" content="https://jjl.gold/2020/02/25/Codeforces-Round-619-Div-2/index.html">
+<meta property="og:site_name" content="简杰龙">
+<meta property="og:description" content="A. Three Strings题意：给出三个长度相等的字符串a,b,c，对于每一位a或b中的一个和c交换，是否存在使得a，b相等的情况。思路：直接枚举c的每一位是否和a或b相同，相同则和不相同的那个交换，没有相同的则无解12345678910111213141516171819202122#include&lt;bits&#x2F;stdc++.h&gt;using namespace std;strin">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jjl.gold/2020/02/25/Codeforces-Round-619-Div-2/map.jpg">
+<meta property="article:published_time" content="2020-02-25T09:56:15.000Z">
+<meta property="article:modified_time" content="2020-02-25T11:03:03.753Z">
+<meta property="article:author" content="Jjl0229">
+<meta property="article:tag" content="codeforces">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jjl.gold/2020/02/25/Codeforces-Round-619-Div-2/map.jpg">
+
+<link rel="canonical" href="https://jjl.gold/2020/02/25/Codeforces-Round-619-Div-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>Codeforces Round #619 (Div. 2) 题解 | 简杰龙</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+    <!-- 代码块复制功能 -->
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">简杰龙</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right"></div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-相册">
+
+    <a href="/photos/" rel="section"><i class="fa fa-fw fa-photo"></i>相册</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jjl.gold/2020/02/25/Codeforces-Round-619-Div-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="name" content="Jjl0229">
+      <meta itemprop="description" content="策谋本天成，妙手偶得之">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="简杰龙">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Codeforces Round #619 (Div. 2) 题解
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-02-25 17:56:15 / 修改时间：19:03:03" itemprop="dateCreated datePublished" datetime="2020-02-25T17:56:15+08:00">2020-02-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/codeforces/" itemprop="url" rel="index">
+                    <span itemprop="name">codeforces</span>
+                  </a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/codeforces/div2/" itemprop="url" rel="index">
+                    <span itemprop="name">div2</span>
+                  </a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-clock-o"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>17 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="A-Three-Strings"><a href="#A-Three-Strings" class="headerlink" title="A. Three Strings"></a>A. Three Strings</h2><p>题意：给出三个长度相等的字符串a,b,c，对于每一位a或b中的一个和c交换，是否存在使得a，b相等的情况。<br>思路：直接枚举c的每一位是否和a或b相同，相同则和不相同的那个交换，没有相同的则无解<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="built_in">string</span> a,b,c;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;(<span class="keyword">int</span>)a.size();++i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(a[i]==c[i]||b[i]==c[i]) <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">cout</span>&lt;&lt;<span class="string">"NO\n"</span>;</span><br><span class="line">            <span class="keyword">return</span> ;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;<span class="string">"YES\n"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> T;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;T;</span><br><span class="line">    <span class="keyword">while</span>(T--)&#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;a&gt;&gt;b&gt;&gt;c;</span><br><span class="line">        solve();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><a id="more"></a><br>&emsp;</p>
+<h2 id="B-Motarack’s-Birthday"><a href="#B-Motarack’s-Birthday" class="headerlink" title="B. Motarack’s Birthday"></a>B. Motarack’s Birthday</h2><p>题意：给出有n个数字的序列，数字是-1表示需要被替换，求找到一个k替换所有-1使得每个相邻数字之间的绝对值差最大的最小。<br>思路：三分枚举k，因为(x=k,y=绝对值的差)可以构成一个凹形的函数。应该也可以二分枚举绝对值，不过太难实现了。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> a[<span class="number">100010</span>],b[<span class="number">100010</span>],n;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">check</span><span class="params">(<span class="keyword">long</span> <span class="keyword">long</span> k)</span></span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)&#123;</span><br><span class="line">        <span class="keyword">if</span>(a[i]==<span class="number">-1</span>) b[i]=k;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> Max=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n<span class="number">-1</span>;++i)&#123;</span><br><span class="line">        Max=max(<span class="built_in">abs</span>(b[i]-b[i+<span class="number">1</span>]),Max);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Max;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> T;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;T;</span><br><span class="line">    <span class="keyword">while</span>(T--)&#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;n;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;++i)&#123;</span><br><span class="line">            <span class="built_in">cin</span>&gt;&gt;a[i];</span><br><span class="line">            b[i]=a[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">long</span> <span class="keyword">long</span> l=<span class="number">0</span>,r=<span class="number">1e9</span>;</span><br><span class="line">        <span class="keyword">int</span> m=<span class="number">1e9</span>,k;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=<span class="number">100</span>;++i)&#123;</span><br><span class="line">            <span class="keyword">long</span> <span class="keyword">long</span> ll=(l*<span class="number">2</span>+r)/<span class="number">3</span>;</span><br><span class="line">            <span class="keyword">long</span> <span class="keyword">long</span> rr=(l+r*<span class="number">2</span>)/<span class="number">3</span>;</span><br><span class="line">            <span class="keyword">int</span> resl=check(ll);</span><br><span class="line">            <span class="keyword">int</span> resr=check(rr);</span><br><span class="line">            <span class="keyword">if</span>(resl&gt;resr)&#123;</span><br><span class="line">                l=ll;</span><br><span class="line">                m=resr;</span><br><span class="line">                k=rr;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                r=rr;</span><br><span class="line">                m=resl;</span><br><span class="line">                k=ll;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;m&lt;&lt;<span class="string">" "</span>&lt;&lt;k&lt;&lt;<span class="string">"\n"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>&emsp;</p>
+<h2 id="C-Ayoub’s-function"><a href="#C-Ayoub’s-function" class="headerlink" title="C. Ayoub’s function"></a>C. Ayoub’s function</h2><p>题意：用m个’1’，n-m个’0’构造一个串，使得包含’1’的子串尽可能的多。例如：<br>“01010” 有12个子串包含’1’：(1,2),(1,3),(1,4),(1,5),(2,2),(2,3),(2,4),(2,5),(3,4),(3,5),(4,4),(4,5)。<br>思路：容易想到让’1’的位置尽量均匀的分开答案最大，但是分开后子串的数量统计有点困难。正难则反,我们去用所有子串的数量减去全’0’串的数量得到的就是包含’1’的子串数量。（长度为n的串具有n*(n+1)/2个子串）<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">int</span> n,m;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> ans=<span class="number">1l</span>l*(n+<span class="number">1</span>)*n/<span class="number">2</span>;</span><br><span class="line">    n=n-m; <span class="comment">//0的数量</span></span><br><span class="line">    m=m+<span class="number">1</span>;<span class="comment">//全0串数量</span></span><br><span class="line">    <span class="keyword">long</span> <span class="keyword">long</span> a=n/m,b=n%m ;<span class="comment">//每个串最少有a个0，b个串有a+1个0</span></span><br><span class="line">    ans=ans-a*(a+<span class="number">1</span>)/<span class="number">2</span>*(m-b)-(a+<span class="number">1</span>)*(a+<span class="number">2</span>)/<span class="number">2</span>*b;</span><br><span class="line">    <span class="built_in">cout</span>&lt;&lt;ans&lt;&lt;<span class="string">'\n'</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> T;</span><br><span class="line">    <span class="built_in">cin</span>&gt;&gt;T;</span><br><span class="line">    <span class="keyword">while</span>(T--)&#123;</span><br><span class="line">        <span class="built_in">cin</span>&gt;&gt;n&gt;&gt;m;</span><br><span class="line">        solve();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;</p>
+<h2 id="D-Time-to-Run"><a href="#D-Time-to-Run" class="headerlink" title="D. Time to Run"></a>D. Time to Run</h2><p>题意：在一个如图的地图中每个格子到相邻的格子都有两个方向的边，求从是否存在从(0,0)出发，且每条边只有一次的共走k的方案，如果有按[次数-移动]的格式输出，输出不能超过3000行，移动不超过4个字符。<br><img src="/2020/02/25/Codeforces-Round-619-Div-2/map.jpg" alt><br>思路：模拟题。首先找到一个可以把则(4nm−2n−2m)的方法，就是先向右走到最后一列，再向下向上向左，一直走到第一列，然后向下继续这样走，直到走完最后一行后还剩下所有行第一列的向上的边没走，那么最后还回到了(0,0)。剩下的就是做模拟了。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">ac</span>&#123;</span></span><br><span class="line">    <span class="built_in">string</span> s;</span><br><span class="line">    <span class="keyword">int</span> t,l;</span><br><span class="line">    <span class="keyword">int</span> id;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">vector</span>&lt;ac&gt; v;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n,m,k;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d%d%d"</span>,&amp;n,&amp;m,&amp;k);</span><br><span class="line">    <span class="keyword">int</span> tot=<span class="number">4</span>*m*n<span class="number">-2</span>*n<span class="number">-2</span>*m;</span><br><span class="line">    <span class="keyword">if</span>(tot&lt;k)&#123;</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">"NO"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">string</span> tdur=<span class="string">"DUL"</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(m<span class="number">-1</span>!=<span class="number">0</span>)&#123;</span><br><span class="line">                v.push_back((ac)&#123;<span class="string">"R"</span>,m<span class="number">-1</span>,<span class="number">1</span>,<span class="number">1</span>&#125;);</span><br><span class="line">                v.push_back((ac)&#123;tdur,m<span class="number">-1</span>,<span class="number">3</span>,<span class="number">2</span>&#125;);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(n!=<span class="number">1</span>)</span><br><span class="line">            v.push_back((ac)&#123;<span class="string">"D"</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(m<span class="number">-1</span>!=<span class="number">0</span>)&#123;</span><br><span class="line">            v.push_back((ac)&#123;<span class="string">"R"</span>,m<span class="number">-1</span>,<span class="number">1</span>,<span class="number">4</span>&#125;);</span><br><span class="line">            v.push_back((ac)&#123;<span class="string">"L"</span>,m<span class="number">-1</span>,<span class="number">1</span>,<span class="number">5</span>&#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(n!=<span class="number">1</span>)</span><br><span class="line">        v.push_back((ac)&#123;<span class="string">"U"</span>,n<span class="number">-1</span>,<span class="number">1</span>,<span class="number">6</span>&#125;);</span><br><span class="line">        tot=<span class="number">0</span>;</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">"YES"</span>);</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        tot=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();++i)&#123;</span><br><span class="line">            tot+=v[i].t*v[i].l;</span><br><span class="line">            <span class="keyword">if</span>(tot&lt;=k)&#123;</span><br><span class="line">                ++res;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                tot-=v[i].t*v[i].l;</span><br><span class="line">                <span class="keyword">int</span> gap=k-tot;</span><br><span class="line">                <span class="keyword">if</span>(v[i].id==<span class="number">1</span>)&#123;</span><br><span class="line">                    res++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(v[i].id==<span class="number">2</span>)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(gap/<span class="number">3</span>&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                        res++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(gap-gap/<span class="number">3</span>*<span class="number">3</span>&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                        res++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(gap-gap/<span class="number">3</span>*<span class="number">3</span>&gt;<span class="number">1</span>)&#123;</span><br><span class="line">                        res++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(v[i].id==<span class="number">3</span>)&#123;</span><br><span class="line">                        res++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                        res++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(tot==k) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">cout</span>&lt;&lt;res&lt;&lt;<span class="string">'\n'</span>;</span><br><span class="line">        tot=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;v.size();++i)&#123;</span><br><span class="line">            tot+=v[i].t*v[i].l;</span><br><span class="line">            <span class="keyword">if</span>(tot&lt;=k)&#123;</span><br><span class="line">                ++res;</span><br><span class="line">                <span class="built_in">cout</span>&lt;&lt;v[i].t&lt;&lt;<span class="string">" "</span>&lt;&lt;v[i].s&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                tot-=v[i].t*v[i].l;</span><br><span class="line">                <span class="keyword">int</span> gap=k-tot;</span><br><span class="line">                <span class="keyword">if</span>(v[i].id==<span class="number">1</span>)&#123;</span><br><span class="line">                    res++;</span><br><span class="line">                    <span class="built_in">cout</span>&lt;&lt;gap&lt;&lt;<span class="string">" R\n"</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(v[i].id==<span class="number">2</span>)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(gap/<span class="number">3</span>&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                        <span class="built_in">cout</span>&lt;&lt;gap/<span class="number">3</span>&lt;&lt;<span class="string">" DUL\n"</span>;</span><br><span class="line">                        res++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(gap-gap/<span class="number">3</span>*<span class="number">3</span>&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                        <span class="built_in">cout</span>&lt;&lt;<span class="string">"1 D\n"</span>;</span><br><span class="line">                        res++;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span>(gap-gap/<span class="number">3</span>*<span class="number">3</span>&gt;<span class="number">1</span>)&#123;</span><br><span class="line">                        <span class="built_in">cout</span>&lt;&lt;<span class="string">"1 U\n"</span>;</span><br><span class="line">                        res++;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(v[i].id==<span class="number">3</span>)&#123;</span><br><span class="line">                        res++;</span><br><span class="line">                    <span class="built_in">cout</span>&lt;&lt;<span class="string">"1 D\n"</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="built_in">cout</span>&lt;&lt;gap&lt;&lt;<span class="string">" "</span>&lt;&lt;v[i].s;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(tot==k) &#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Jjl0229
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jjl.gold/2020/02/25/Codeforces-Round-619-Div-2/" title="Codeforces Round #619 (Div. 2) 题解">https://jjl.gold/2020/02/25/Codeforces-Round-619-Div-2/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+      <div>
+  
+    <div>
+    
+      <div style="text-align:center;color: #ccc;font-size:20px;">天高地迥，觉宇宙之无穷；兴尽悲来，识盈虚之有数。望长安于日下，目吴会于云间。地势极而南溟深，天柱高而北辰远。关山难越，谁悲失路之人；萍水相逢，尽是他乡之客。 </div>
+    
+</div>
+  
+</div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/codeforces/" rel="tag"># codeforces</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/02/25/Codeforces-Round-620-Div-2/" rel="prev" title="Codeforces Round #620 (Div. 2)  题解">
+      <i class="fa fa-chevron-left"></i> Codeforces Round #620 (Div. 2)  题解
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/02/27/2020%E7%89%9B%E5%AE%A2%E5%AF%92%E5%81%87%E7%AE%97%E6%B3%95%E5%9F%BA%E7%A1%80%E9%9B%86%E8%AE%AD%E8%90%A51/" rel="next" title="2020牛客寒假算法基础集训营1">
+      2020牛客寒假算法基础集训营1 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-Three-Strings"><span class="nav-number">1.</span> <span class="nav-text">A. Three Strings</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-Motarack’s-Birthday"><span class="nav-number">2.</span> <span class="nav-text">B. Motarack’s Birthday</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-Ayoub’s-function"><span class="nav-number">3.</span> <span class="nav-text">C. Ayoub’s function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-Time-to-Run"><span class="nav-number">4.</span> <span class="nav-text">D. Time to Run</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jjl0229"
+      src="/uploads/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Jjl0229</p>
+  <div class="site-description" itemprop="description">策谋本天成，妙手偶得之</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/yourname" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;yourname" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="http://codeforces.com/profile/hello201999" title="Codeforces → http:&#x2F;&#x2F;codeforces.com&#x2F;profile&#x2F;hello201999" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Codeforces</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://blog.csdn.net/weixin_43769146" title="CSDN → https:&#x2F;&#x2F;blog.csdn.net&#x2F;weixin_43769146" rel="noopener" target="_blank"><i class="fa fa-fw fa-csdn"></i>CSDN</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/99326686" title="b站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;99326686" rel="noopener" target="_blank"><i class="fa fa-fw fa-tv"></i>b站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jjl0229</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">73k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">4:52</span>
+</div>
+
+  
+  
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
